@@ -1,9 +1,3 @@
-####### FREQUENT SETS #########
-# In its current state, this function only returns only the sum of frequent itemsets.
-# Once the necessary classes are established, this will be changed.
-# Pretty slow
-
-
 freq_sets <- function(dat, support) {
   k <- 1
   n <- nrow(dat)
@@ -26,7 +20,7 @@ freq_sets <- function(dat, support) {
   sets <- matrix(as.vector(sets)[hlp], ncol = 2, byrow = TRUE)
   k <- 2
 
-  # convert sets into matrix representation using set_to_matrix
+    # convert sets into matrix representation using set_to_matrix
   set_mat <-  t(apply(
     sets,
     FUN = set_to_matrix,
@@ -89,11 +83,3 @@ freq_sets <- function(dat, support) {
   }
   return(sumsets)
 }
-
-
-
-
-
-
-############# END
-

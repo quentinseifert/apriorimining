@@ -2,7 +2,7 @@
 
 ################# Count individual item frequencies ###########################
 
-item_count <- function(transactions){
+item_count <- function(dat){
   count <- Matrix::colSums(transactions)
   return(count)
 }
@@ -48,7 +48,7 @@ set_mat <- t(apply(
 
 # 'clean_sets': Removes all duplicated sets from the set-matrix
 
-clean_sets <- function(names, set_mat) {
+clean_sets <- function(names, set_mat, dat) {
 
   # transform set_mat into vector of indices where the vector equals 1
 
@@ -85,7 +85,7 @@ clean_sets <- function(names, set_mat) {
 
 # Function currently used for counting occurences of itemsets
 
-count_freq <- function(set_mat, transactions, k) {
+count_freq <- function(set_mat, dat, k) {
 
   # Each line of set_mat is multiplied with each column transposed
   # transaction matrix. If the product equals k (number of items
@@ -114,7 +114,7 @@ prune <- function(sets, count, support, n) {
   # the function returns the sets unchanged. Otherwise it selects the sets for which
   # this is not the case and throws them out
 
-  if (!all(count / nrow(dat) >= support)){
+  if (!all(count / n >= support)){
     out <- which((count / n) < support)
     sets <- sets[-out,]
     return(sets)
