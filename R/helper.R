@@ -79,13 +79,11 @@ count_freq <- function(set_mat, dat, k) {
   # this is the case or not and sums them up. The function then returns
   # how often each itemset occured in the transaction matrix.
 
-  count <- apply(
-    set_mat,
-    FUN = function(a, b)
-      return(sum(a %*% t(b) == k)),
-    b = dat,
-    MARGIN = 1
-  )
+  set_mat <- set_mat * 1
+  dat <- dat * 1
+
+  count <- rowSums(set_mat %*% t(dat) == k)
+
   return(count)
 }
 
