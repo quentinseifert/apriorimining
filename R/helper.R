@@ -20,15 +20,9 @@ is_in <- function(mat, new_set){
 # 'set_to_matrix': Transform a set of items (vector of strings)
 # into a vector of 0s and 1s
 
-set_to_matrix <- function(set, names){
-  line <- rep(0, length(names))
-  for (i in 1:length(set)){
-    for (j in 1:length(names)){
-      if (names[j] == set[i]){
-        line[j] <- 1
-      }
-    }
-  }
+set_to_matrix <- function(set, len) {
+  line <- rep(0, times = len)
+  line[set] <- 1
   return(line)
 }
 
@@ -48,23 +42,14 @@ set_mat <- t(apply(
 
 # 'clean_sets': Removes all duplicated sets from the set-matrix
 
-clean_sets <- function(names, set_mat, dat) {
-
-  # transform set_mat into vector of indices where the vector equals 1
-
-  index <- which(as.vector(unique(set_mat)) == 1)
-
-  # repeat the colnames times the number of unique sets. (Not very efficient
-  # use of memory, as it creates a very large vector of strings)
-
-  y <- rep(colnames(dat), times = nrow(unique(set_mat)))
-
-  # use the above created vector of indices to select the items needed from
-  # the large vector of strings and transform this vector into a matrix with
-  # the same nrow as the set_mat which only contains unique sets
-
-  sets <- matrix(y[index], nrow = nrow(unique(set_mat)), byrow = TRUE)
-  return(sets)
+clean_sets <- function(set_mat) {
+  sets <- t(apply(
+    set_mat,
+    FUN = function(a)
+      return(which(a == 1)),
+    MARGIN = 1
+  ))
+return(sets)
 }
 
 # 'count_freq: counts the number of occurences of sets in the transaction matrix'
@@ -157,7 +142,9 @@ remove_bad_sets <- function(sets) {
         return(any(duplicated(a))),
       MARGIN = 1
     )
-  sets <- sets[-which(out),]
+  if (any(out)) {
+    sets <- sets[-which(out),]
+  }
   return(sets)
 }
 
