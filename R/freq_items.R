@@ -31,9 +31,9 @@ freq_items <- function(dat, supp) {
 
   sup <- colMeans(dat)
 
-  # create object of class itmsets saving all relevant information
+  # create object of class itemsets saving all relevant information
 
-  itmsets <- new("itmsets",
+  itemsets <- new("itemsets",
                  sets = as(set_mat, "ngCMatrix"),
                  support = sup,
                  items = items)
@@ -89,16 +89,16 @@ freq_items <- function(dat, supp) {
       sup <- (count / n)[count / n >= 0.01]
 
       # Append sets saved in this iteration to sets saved in previous iterations
-      itmsets <- new("itmsets",
-                     sets = rbind(itmsets@sets, set_mat),
-                     support = c(itmsets@support, sup),
+      itemsets <- new("itemsets",
+                     sets = rbind(itemsets@sets, set_mat),
+                     support = c(itemsets@support, sup),
                      items = items)
 
     } else {
       condition <- FALSE
     }
   }
-  return(itmsets)
+  return(itemsets)
 }
 
 
