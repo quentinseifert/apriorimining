@@ -71,7 +71,7 @@ freq_items <- function(dat, supp) {
 
 
       # if there are any items saved in out (which there probably will be for k > 3),
-      # these can be temporarily excluded for the counting step. However, they will,
+      # these can be temporarily excluded for the counting step. However, they will
       # still be needed later and therefore can be excluded completely.
 
       if (length(out) > 0) {
@@ -88,7 +88,7 @@ freq_items <- function(dat, supp) {
       k <- k + 1
       sup <- (count / n)[count / n >= 0.01]
 
-      # Append sets saved in this iteration with sets saved in previous iterations
+      # Append sets saved in this iteration to sets saved in previous iterations
       itmsets <- new("itmsets",
                      sets = rbind(itmsets@sets, set_mat),
                      support = c(itmsets@support, sup),
