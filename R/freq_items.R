@@ -26,7 +26,7 @@ freq_items <- function(purchase, supp) {
   sets <- as.matrix(1:length(items))
 
 
-  k <- 2
+
 
   # save support of frequent items
 
@@ -42,7 +42,7 @@ freq_items <- function(purchase, supp) {
   # condition for while loop
 
   condition <- TRUE
-
+  k <- 2
   while (condition) {
 
     # generate sets with gen_sets
