@@ -26,5 +26,6 @@ data("Groceries")
 bsp<-as(Groceries,"matrix")
 abc<-apriorimining(input = bsp,support = 0.01,confidence = 0.5)
 class(abc)
-show.itemsets(abc)
+
+show(abc)
 

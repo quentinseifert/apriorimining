@@ -32,12 +32,13 @@ freq_items <- function(purchase, supp) {
 
   sup <- colMeans(dat)
 
-  # create object of class itemsets saving all relevant information
+  # create object of class frequentsets saving all relevant information
 
-  itemsets <- new("itemsets",
+  itemsets <- new("frequentsets",
                  sets = as(set_mat, "ngCMatrix"),
                  support = sup,
-                 items = items)
+                 items = items,
+                 minsup = supp)
 
   # condition for while loop
 
@@ -87,13 +88,14 @@ freq_items <- function(purchase, supp) {
       set_mat <- prune(set_mat, count, supp, n)
       set_mat <- as(set_mat, "ngCMatrix")
       k <- k + 1
-      sup <- (count / n)[count / n >= 0.01]
+      sup <- (count / n)[count / n >= supp]
 
       # Append sets saved in this iteration to sets saved in previous iterations
-      itemsets <- new("itemsets",
+      itemsets <- new("frequentsets",
                      sets = rbind(itemsets@sets, set_mat),
                      support = c(itemsets@support, sup),
-                     items = items)
+                     items = items,
+                     minsup = supp)
 
     } else {
       condition <- FALSE

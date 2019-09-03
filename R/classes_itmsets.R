@@ -2,23 +2,61 @@
 
 #### class
 
-setClass("itemsets",
+setClass("frequentsets",
          slots = list(
            sets = "ngCMatrix",
            support = "numeric",
-           items = "character"
+           items = "character",
+           minsup = "numeric"
          ))
 
 #### generics 
 
-setGeneric("show.itemsets", function(object){
-  standardGeneric("show.itemsets")
+setGeneric("show.itemsets",
+           function(object){
+           standardGeneric("show.itemsets")
 })
 
 #### methodes
 
+setMethod("show",
+          "frequentsets",
+          function(object) {
+            
+            idx_storage <- sapply(1:dim(object@sets)[1],
+                                  FUN = function(z) {which(object@sets[z,])}
+            )
+            counter_vec <- rep(NA,length(length(tail(idx_storage,n=1)[[1]])))  
+            hlp1 <- length(object@support)
+            hlp2 <- length(tail(idx_storage,n=1)[[1]]) 
+            
+            cat("There are",hlp1,"frequently occuring itemsets.\n")
+            cat("The largest frequently occuring itemset contains", hlp2,"Items.\n")  
+            
+            for(j in 1:length(tail(idx_storage,n=1)[[1]])) {
+              
+              counter <- 0
+              
+              for (i in 1:length(idx_storage)) {
+                
+                if(length(idx_storage[[i]])==j) {
+                  counter <- counter + 1
+                } 
+              }
+              counter_vec[j]<-counter
+            }
+            
+            for(k in 1:length(tail(idx_storage,n=1)[[1]])) {
+              cat(
+                "Frequent Itemsets containing",k,"Item(s), appeared",counter_vec[k],"times.\n"
+              )
+            }
+            cat("\n\n\nThe term \"frequently\" refers to the minimum support threshold (",object@minsup,")")
+          }
+)
+
 setMethod("show.itemsets",
-          "itemsets",
+          "frequentsets",
           function(object) {
             idx_storage <- sapply(1:dim(object@sets)[1],
                                   FUN = function(z) {which(object@sets[z,])}
@@ -45,8 +83,8 @@ setMethod("show.itemsets",
         )
 
 
-setMethod("hist",
-          "itemsets",
+setMethod("plot",
+          "frequentsets",
           function(x) {
             idx_storage <- sapply(1:dim(x@sets)[1],
                                   FUN = function(z) {which(x@sets[z,])}
@@ -93,42 +131,11 @@ setMethod("hist",
               
 
               
-setMethod("summary",
-          "itemsets",
-          function(object) {
-            idx_storage <- sapply(1:dim(object@sets)[1],
-                                  FUN = function(z) {which(object@sets[z,])}
-                                  )
-            counter_vec <- rep(NA,length(length(tail(idx_storage,n=1)[[1]])))  
-            
-                          
-            for(j in 1:length(tail(idx_storage,n=1)[[1]])) {
-                            
-              counter <- 0
-                            
-                for (i in 1:length(idx_storage)) {
-            
-                  if(length(idx_storage[[i]])==j) {
-                  counter <- counter + 1
-                  } 
-                }
-              counter_vec[j]<-counter
-            }
-                          
-            for(k in 1:length(tail(idx_storage,n=1)[[1]])) {
-              cat(
-                "The itemsets containing",k,"Item(s), appeared",counter_vec[k],"times.\n"
-                )
-            }
-          }
-          )
 
 
 
-# Notes
 
-hlp <- length(tail(idx_storage,n=1)[[1]]) 
-cat("Das größte Itemset umfasst", hlp,"Items.")  
+
 
 
 
