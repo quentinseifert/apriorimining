@@ -32,9 +32,9 @@ freq_items <- function(purchase, supp) {
 
   sup <- colMeans(dat)
 
-  # create object of class itmsets saving all relevant information
+  # create object of class itemsets saving all relevant information
 
-  itmsets <- new("itmsets",
+  itemsets <- new("itemsets",
                  sets = as(set_mat, "ngCMatrix"),
                  support = sup,
                  items = items)
@@ -72,7 +72,7 @@ freq_items <- function(purchase, supp) {
 
 
       # if there are any items saved in out (which there probably will be for k > 3),
-      # these can be temporarily excluded for the counting step. However, they will,
+      # these can be temporarily excluded for the counting step. However, they will
       # still be needed later and therefore can be excluded completely.
 
       if (length(out) > 0) {
@@ -89,17 +89,17 @@ freq_items <- function(purchase, supp) {
       k <- k + 1
       sup <- (count / n)[count / n >= 0.01]
 
-      # Append sets saved in this iteration with sets saved in previous iterations
-      itmsets <- new("itmsets",
-                     sets = rbind(itmsets@sets, set_mat),
-                     support = c(itmsets@support, sup),
+      # Append sets saved in this iteration to sets saved in previous iterations
+      itemsets <- new("itemsets",
+                     sets = rbind(itemsets@sets, set_mat),
+                     support = c(itemsets@support, sup),
                      items = items)
 
     } else {
       condition <- FALSE
     }
   }
-  return(itmsets)
+  return(itemsets)
 }
 
 

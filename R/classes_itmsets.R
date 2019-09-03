@@ -1,6 +1,5 @@
 # R-script containing the class "itemsets" and its generics and methods
 
-
 #### class
 
 setClass("itemsets",
@@ -30,14 +29,15 @@ setMethod("show.itemsets",
             longest_set <- length(tail(idx_storage,n=1)[[1]])
             
             
-            for (i in 1:längstes_set) {
+            for (i in 1:longest_set) {
               
+              cat("\n##############################")
               cat("\nItemsets containing", i ,"item(s):\n\n")
-            for (j in 1:length(speicher)) {
+            for (j in 1:length(storage)) {
                 
-              if(length(speicher[[j]]) == i) {
+              if(length(storage[[j]]) == i) {
                   
-                cat(speicher[[j]],"\n",sep = ",")
+                cat(storage[[j]],"\n",sep = ",")
                 }
               } 
             }
@@ -48,8 +48,8 @@ setMethod("show.itemsets",
 setMethod("hist",
           "itemsets",
           function(x) {
-            idx_storage <- sapply(1:dim(object@sets)[1],
-                                  FUN = function(z) {which(object@sets[z,])}
+            idx_storage <- sapply(1:dim(x@sets)[1],
+                                  FUN = function(z) {which(x@sets[z,])}
             )
             counter_vec <- rep(NA,length(length(tail(idx_storage,n=1)[[1]])))  
             longest_set <- length(tail(idx_storage,n=1)[[1]])
@@ -72,11 +72,14 @@ setMethod("hist",
             if(longest_set > 3) {
               
               par(mfrow = c(2,ceiling(longest_set / 2)))   
+            } else {
+                    
+              par(mfrow = c(1,3))
                   }
             
             for (i in 1:longest_set) {
               
-              hist(x@support[seq(1:countervec[i])],
+              hist(x@support[seq(1:counter_vec[i])],
                    xlab="support",
                    freq=T,
                    main=c(""),
@@ -84,7 +87,7 @@ setMethod("hist",
                    col=8)
               abline(v=0.01,col=2,lwd=3)
               legend("topright",c("minsup"),lty = 1,col=2)
-              title("Hist of support for sets containing item")
+              title(i)
             }
          })
               
@@ -103,18 +106,18 @@ setMethod("summary",
                             
               counter <- 0
                             
-                for (i in 1:length(idxspeicher)) {
+                for (i in 1:length(idx_storage)) {
             
-                  if(length(idxspeicher[[i]])==j) {
+                  if(length(idx_storage[[i]])==j) {
                   counter <- counter + 1
                   } 
                 }
               counter_vec[j]<-counter
             }
                           
-            for(k in 1:length(tail(idxspeicher,n=1)[[1]])) {
+            for(k in 1:length(tail(idx_storage,n=1)[[1]])) {
               cat(
-                "The itemsets containing",k,"Items, appeared",countervec[k],"times.\n"
+                "The itemsets containing",k,"Item(s), appeared",counter_vec[k],"times.\n"
                 )
             }
           }
