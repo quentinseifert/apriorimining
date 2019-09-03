@@ -4,23 +4,24 @@
 # Pretty slow
 
 
-freq_items <- function(dat, supp) {
+freq_items <- function(purchase, supp) {
 
 
   # Preparing data, much of this won't be necessary as soon as class for transaction
   # is properly integrated
 
+  dat <- purchase@data
+  item_names <- purchase@items
+
   n <- nrow(dat)
   sets <- which(colMeans(dat) >= supp)
-  items <- colnames(dat)[sets]
-  names(sets) <- NULL
+  items <- item_names[sets]
 
   # throwing out items out of the data that are not frequent as they will not matter
   # for larger itemsets
 
   dat <- dat[, sets]
   sets <- as.matrix(sets)
-  colnames(dat) <- NULL
   set_mat <- diag(length(items))
   sets <- as.matrix(1:length(items))
 
