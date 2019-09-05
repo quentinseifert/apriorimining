@@ -21,7 +21,7 @@ setClass("associationrules",
 setMethod("show",
           "associationrules",
           function (object) {
-            cat(nrow(object@antecedant),"rules can be generated from the given data and the respective parameters.")
+            cat(nrow(object@antecedent),"rules can be generated from the given data and the respective parameters.")
           })
 
 
