@@ -44,12 +44,12 @@ rules <- function(itemsets, support, confidence) {
 
   measurements <- cbind(supp_both, conf, lift)
 
-  ass_rules <- new("associationrules",
+  a_rules <- new("associationrules",
                    antecedent = lhs,
                    consequent = rhs,
                    measurements = measurements,
                    items = itemsets@items)
 
-  return(ass_rules)
+  return(a_rules)
 
 }
