@@ -14,13 +14,13 @@ rules <- function(itemsets, support, confidence) {
   # pass matrices on to function map_sup to map each set to its
   # respective support
 
-  support_lhs <- apply(lhs, 1, map_sup, b = itemsets)
-  support_rhs <- apply(rhs, 1, map_sup, b = itemsets)
-  support_both <- apply(both, 1, map_sup, b = itemsets)
+  supp_lhs <- apply(lhs, 1, map_sup, b = itemsets)
+  supp_rhs <- apply(rhs, 1, map_sup, b = itemsets)
+  supp_both <- apply(both, 1, map_sup, b = itemsets)
 
   # divide support_both by support_lhs in order to receive confidence
 
-  conf <- support_both / support_lhs
+  conf <- supp_both / supp_lhs
 
   # check which confidence is >= minconfidence
 
@@ -31,5 +31,25 @@ rules <- function(itemsets, support, confidence) {
   lhs <- lhs[ind,]
   rhs <- rhs[ind,]
 
+  # prepare content for object of class ass_rules
+
+  supp_both <- supp_both[ind]
+  supp_lhs <- supp_lhs[ind]
+  supp_rhs <- supp_rhs[ind]
+  conf <- conf[ind]
+
+  # calculate lift
+
+  lift <- supp_both / (supp_lhs * supp_rhs)
+
+  measurements <- cbind(supp_both, conf, lift)
+
+  ass_rules <- new("associationrules",
+                   antecedent = lhs,
+                   consequent = rhs,
+                   measurement = measurements,
+                   items = itemsets@items)
+
+  return(ass_rules)
 
 }
