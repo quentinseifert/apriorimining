@@ -20,15 +20,3 @@ apriorimining <- function(input, support, confidence) {
 
   return(a)
 }
-
-
-######## notes
-
-library(arules)
-data("Groceries")
-bsp<-as(Groceries,"matrix")
-abc<-apriorimining(input = bsp,support = 0.01,confidence = 0.5)
-class(abc)
-
-show(abc)
-

@@ -13,21 +13,48 @@ setClass("associationrules",
 
 
 
-#### generics
-
 #### methodes
 
 
 setMethod("show",
           "associationrules",
           function (object) {
-            cat(nrow(object@antecedent),"rules can be generated from the given data and the respective parameters.")
+            cat("set of",nrow(object@antecedent), "rules")
           })
 
+setMethod("summary",
+          "associationrules",
+          function (object) {
+            
+
+            idx_storage_a <- lapply(1:dim(object@antecedent)[1],
+                      FUN = function(z) {which(object@antecedent[z,])}
+                      )
+
+            item_storage_a <- unlist(
+                  lapply(
+                  1:length(idx_storage_a),
+                  FUN = function(z)
+                  paste(object@items[idx_storage_a[[z]]], collapse = ", ")))
 
 
+            idx_storage_c <- sapply(1:dim(object@consequent)[1],
+                        FUN = function(z) {which(object@consequent[z,])})
 
+            item_storage_c <- sapply(1:length(idx_storage_c), 
+                         FUN = function(z) object@items[idx_storage_c[z]])
 
+            output <- data.frame(item_storage_a,
+                    rep("~>", length(item_storage_a)),
+                    item_storage_c,
+                    rep("||",length(item_storage_a)),
+                    abc@measurements[,1],
+                    abc@measurements[,2],
+                    abc@measurements[,3]
+                    )
 
+            colnames(output) <- c("antecedent","~>","consequent","||",
+                                  "support","confidence","lift")
 
-
+            return(output)
+            })
