@@ -47,6 +47,13 @@ setGeneric("show.rare.items",
 
 #### methoden
 
+setMethod("show",
+          "purchase",
+          function(object) {
+            
+          })
+
+
 setMethod("show.items",
           "purchase",
           function (object) {
