@@ -20,53 +20,23 @@ is_in <- function(mat, new_set){
 # 'set_to_matrix': Transform a set of items (vector of strings)
 # into a vector of 0s and 1s
 
-set_to_matrix <- function(set, len) {
-  line <- rep(0, times = len)
-  line[set] <- 1
-  return(line)
+set_to_matrix <- function(sets, items) {
+  set_mat <- t(sparseMatrix(i = as.vector(t(sets)),
+                            j = rep(1:nrow(sets), each = ncol(sets)),
+                            dims = c(length(items), nrow(sets))))
+  return(set_mat)
 }
-
-
-# Example of application of the set_to_matrix function. It would probably make
-# sense to wrap the set_to_matrix using apply
-
-set_mat <- t(apply(
-  test,
-  FUN = set_to_matrix,
-  names = colnames(transactions),
-  MARGIN = 1
-))
-
 
 
 
 # 'clean_sets': Removes all duplicated sets from the set-matrix
-
-clean_sets <- function(set_mat) {
-  sets <- t(apply(
-    set_mat,
-    FUN = function(a)
-      return(which(a == 1)),
-    MARGIN = 1
-  ))
-return(sets)
+clean_sets <- function(sets) {
+  sets <- t(apply(sets, 1, sort))
+  sets <- unique(sets)
+  return(sets)
 }
 
-# 'count_freq: counts the number of occurences of sets in the transaction matrix'
 
-# currently unused version, should be explored further
-
-#count_freq <- function(set, transactions) {
-# freq <- sum(apply(
-#    transactions,
-#    FUN = function(a, set)
-#      return(all(a >= set)),
-#    MARGIN = 1,
-#    set = set
-#    )
-#  )
-#  return(freq)
-#}
 
 # Function currently used for counting occurences of itemsets
 
@@ -119,26 +89,22 @@ gen_sets <- function(sets) {
     return(new_sets)
   } else {
     un_item <- unique(as.vector(sets))
-    new_sets <-
-      cbind(apply(
-        sets,
-        FUN = rep,
-        MARGIN = 2,
-        each = length(un_item)),
-      rep(un_item, times = nrow(sets)))
+    new_sets <- cbind(apply(sets,
+                            FUN = rep,
+                            MARGIN = 2,
+                            each = length(un_item)),
+                      rep(un_item, times = nrow(sets)))
     return(new_sets)
   }
 }
 
-# 'remove_bad_sets': Currently, the function gen_sets generates sets where one item
-# may occur more than once. This function throws these sets out.
+# gen_sets produces sets containing the same item more than once, this funtion
+# throws these sets out
 
 remove_bad_sets <- function(sets) {
-  out <- apply(
-      sets,
-      FUN = function(a)
-        return(any(duplicated(a))),
-      MARGIN = 1
+  out <- apply(sets,
+               FUN = function(a) return(any(duplicated(a))),
+               MARGIN = 1
     )
   if (any(out)) {
     sets <- sets[-which(out),]
