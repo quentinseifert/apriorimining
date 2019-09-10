@@ -12,17 +12,6 @@ setClass("frequentsets",
 
 #### generics 
 
-setGeneric("show.itemsets",
-           function(object){
-           standardGeneric("show.itemsets")
-})
-
-
-setGeneric("present",
-           function(object) {
-             standardGeneric("present")
-           })
-
 
 #### methodes
 
@@ -35,10 +24,10 @@ setMethod("show",
             )
             counter_vec <- rep(NA,length(length(tail(idx_storage,n=1)[[1]])))  
             hlp1 <- length(object@support)
-            hlp2 <- length(tail(idx_storage,n=1)[[1]]) 
+            #hlp2 <- length(tail(idx_storage,n=1)[[1]]) 
             
-            cat("There are",hlp1,"frequently occuring itemsets.\n")
-            cat("The largest frequently occuring itemset contains", hlp2,"Items.\n")  
+            cat("Overall ->",hlp1,"frequently occuring itemsets\n\n")
+            #cat("The largest frequently occuring itemset contains", hlp2,"Items.\n")  
             
             for(j in 1:length(tail(idx_storage,n=1)[[1]])) {
               
@@ -53,16 +42,18 @@ setMethod("show",
               counter_vec[j]<-counter
             }
             
+            cat("In detail\n")
+            
             for(k in 1:length(tail(idx_storage,n=1)[[1]])) {
               cat(
-                "Frequent Itemsets containing",k,"Item(s), appeared",counter_vec[k],"times.\n"
+                counter_vec[k], "sets containing",k,"item(s)\n"
               )
             }
-            cat("\n\n\nThe term \"frequently\" refers to the minimum support threshold (",object@minsup,")")
+            cat("\n\n\nThe term \"frequently\" refers to your chosen support of(",object@minsup,")")
           }
 )
 
-setMethod("show.itemsets",
+setMethod("summary",
           "frequentsets",
           function(object) {
             idx_storage <- sapply(1:dim(object@sets)[1],
@@ -125,14 +116,14 @@ setMethod("plot",
             for (i in 1:longest_set) {
               
               hist(x@support[seq(1:counter_vec[i])],
-                   xlab="support",
+                   xlab=c("support",i,"item(s)"),
                    freq=T,
                    main=c(""),
                    breaks=20,
                    col=8)
               abline(v=0.01,col=2,lwd=3)
               legend("topright",c("minsup"),lty = 1,col=2)
-              title(i)
+              
             }
          })
               

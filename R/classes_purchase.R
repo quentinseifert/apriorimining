@@ -33,17 +33,17 @@ setClass("purchase",
 
 #### generics
 
-setGeneric("show.items",
-           function (object) {
-             standardGeneric("show.items")
+setGeneric("rareitems.mean",
+           function (object){
+             standardGeneric("rareitems.mean")
            }
           )
 
-setGeneric("show.rare.items",
+setGeneric("rareitems.absolut",
            function (object){
-             standardGeneric("show.rare.items")
+             standardGeneric("rareitems.absolut")
            }
-          )
+)
 
 #### methoden
 
@@ -56,29 +56,11 @@ setMethod("show",
           })
 
 
+
 setMethod("summary",
           "purchase",
           function (object) {
             storage <-rep(NA, length(object@items))
-            for (i in 1:length(object@items)) {
-              
-              storage[i] <- sum(object@data[,i])  
-            }
-            
-            ordered_storage <- order(storage)
-            for(i in 1:length(object@items)) {
-              
-              cat(object@items[ordered_storage[i]],":",sum(object@data[,ordered_storage[i]]),"\n")
-            }
-          }
-)
-
-# currently not working:
-setMethod("show.rare.items",
-          "purchase",
-          function (object) {
-            rare_items <- which(colMeans(qo@data) < 0.01)
-            storage <- rep(NA, length(object@items))
             
             for (i in 1:length(object@items)) {
               
@@ -86,16 +68,68 @@ setMethod("show.rare.items",
             }
             
             ordered_storage <- order(storage)
-            for(i in 1:length(rare_items)) {
-              
-              cat(object@items[ordered_storage[as.numeric(rare_items[i])]],":",
-                  sum(object@data[,ordered_storage[as.numeric(rare_items[i])]]),"\n")
-            }
+            item <- object@items[ordered_storage]
+            absolut <- sapply(1:length(object@items), function(x) {sum(object@data[,ordered_storage[x]])})
             
+            df <- data.frame(item, absolut)   
+            
+            return(df)
           })
 
 
 
+setMethod("rareitems.mean",
+          "purchase",
+          function (object) {
+            means <- colMeans(object@data)
+            names <- object@items[means < 0.01]
+            
+            smallmeans <- round(means[means < 0.01], digits = 4)
+            smallmeans_orderedidx <- order(smallmeans)
+            
+            mean <- smallmeans[smallmeans_orderedidx] 
+            item <- names[smallmeans_orderedidx]
+            
+            storage <- data.frame(item, "..." = rep("...",length(item)), mean)
+            
+            return(storage)
+          })
+
+
+setMethod("rareitems.absolut",
+          "purchase",
+          function (object) {
+            means <- colMeans(object@data)
+            names <- object@items[means < 0.01]
+            
+            absolut <- sapply(1:length(object@items), function(x) {sum(object@data[,x])})
+            smallabsolut <- absolut[means < 0.01]
+            
+            smallabsolut_orderedidx <- order(smallabsolut)
+            
+            mean <- smallabsolut[smallabsolut_orderedidx] 
+            item <- names[smallabsolut_orderedidx]
+            
+            storage <- data.frame(item, "..." = rep("...",length(item)), mean)
+            
+            return(storage)
+          })
+
+
+setMethod("plot",
+          "purchase",
+          function(x) {
+            
+            par(mfrow=c(1,1))
+            freqs <- colSums(x@data)
+            order(freqs, decreasing = TRUE)
+            ordered_ind <- order(freqs, decreasing = TRUE)
+            names <- x@items[ordered_ind]
+            freqs <- freqs[ordered_ind]
+            limit <- round(length(freqs)*0.1)
+            barplot(freqs[1:limit], names.arg = names[1:limit], las = 2, cex.names = 0.75)
+            
+          })
 
 
 
