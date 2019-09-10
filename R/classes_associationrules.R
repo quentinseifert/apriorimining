@@ -48,9 +48,9 @@ setMethod("summary",
                     rep("~>", length(item_storage_a)),
                     item_storage_c,
                     rep("||",length(item_storage_a)),
-                    abc@measurements[,1],
-                    abc@measurements[,2],
-                    abc@measurements[,3]
+                    object@measurements[,1],
+                    object@measurements[,2],
+                    object@measurements[,3]
                     )
 
             colnames(output) <- c("antecedent","~>","consequent","||",
