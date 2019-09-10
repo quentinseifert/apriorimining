@@ -14,9 +14,10 @@ freq_items <- function(purchase, supp) {
   item_names <- purchase@items
 
   n <- nrow(dat)
-  sets <- which(colMeans(dat) >= supp)
+  supps <- colMeans(dat)
+  sets <- which(supps >= supp)
   items <- item_names[sets]
-
+  supps <- supps[which(supps >= supp)]
   # throwing out items out of the data that are not frequent as they will not
   # matter for larger itemsets
 
@@ -30,13 +31,12 @@ freq_items <- function(purchase, supp) {
 
   # save support of frequent items
 
-  sup <- colMeans(dat)
 
   # create object of class frequentsets saving all relevant information
 
   itemsets <- new("frequentsets",
                  sets = as(set_mat, "ngCMatrix"),
-                 support = sup,
+                 support = supps,
                  items = items,
                  minsup = supp)
 
@@ -45,6 +45,9 @@ freq_items <- function(purchase, supp) {
   condition <- TRUE
   k <- 2
 
+  if (nrow(set_mat) == 1) {
+    return(itemsets)
+  }
 
   while (condition) {
 
@@ -65,6 +68,13 @@ freq_items <- function(purchase, supp) {
 
       n_set_mat <- n_set_mat[ind,]
       sets <- sets[ind,]
+
+      if (is.vector(n_set_mat)) {
+        n_set_mat <- t(as.matrix(n_set_mat)) * 1
+        n_set_mat <- as(n_set_mat, "ngCMatrix")
+        sets <- as.matrix(sets)
+      }
+
     }
 
 
@@ -100,8 +110,13 @@ freq_items <- function(purchase, supp) {
       # (if there are any)
       # otherwise, condition is set to false, which stops the loop, as there are
       # no new frequent itemsets to be found
+      if (is.vector(n_set_mat)) {
+        n_set_mat <- t(as.matrix(n_set_mat)) * 1
+        n_set_mat <- as(n_set_mat, "ngCMatrix")
+        sets <- t(as.matrix(sets))
+      }
 
-      if (nrow(n_set_mat > 0)) {
+      if (nrow(n_set_mat) > 0) {
         itemsets <- new("frequentsets",
                         sets = rbind(itemsets@sets, n_set_mat),
                        support = c(itemsets@support, sup),

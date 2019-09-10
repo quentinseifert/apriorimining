@@ -1,30 +1,57 @@
 #R script containing tests
 
-############# running the code 
+# Mock data set
+
+mat <- matrix(c(0, 1, 0, 1, 0, 0, 0, 0, 1, 0,
+                1, 1, 1, 0, 0, 1, 1, 1, 0, 0,
+                0, 0, 1, 0, 1, 0, 1, 0, 0, 1,
+                0, 1, 1, 0, 1, 0, 0, 0, 0, 1,
+                0, 1, 0, 1, 0, 0, 1, 0, 0, 0,
+                1, 0, 0, 1, 0, 0, 0, 1, 1, 1), nrow = 10, byrow = FALSE)
+
+colnames(mat) <- c("Bananas", "Bread", "Butter", "Sugar", "Diapers", "Cheese")
+
+
+############# running the code
 
 library(arules)
 data("Groceries")
 bsp<-as(Groceries,"matrix")
 
-abc<-apriorimining(input = bsp,support = 0.01,confidence = 0.3)
-def <- apriori(bsp, parameter = list(support = 0.01 , confidence = 0.3))
 
 ############ testing the output
 
 
 install.packages("testthat")
 library("testthat")
+sort(colnames(def@lhs))
 
-test_that("test if both packages generate the same amount of rules",
-          {
-            expect_equal(dim(abc@antecedent)[1], length(def@lhs))
-            
-          })
+supps <- seq(0, 0.9, by = 0.1)
+
+for (i in 1:length(supps)) {
 
 
-test<-inspect(def)
-x <- sort(test[,5])
-y <- sort(abc@measurements[,2])
+
+  test_that("test if both packages generate the same amount of rules",
+            {
+              abc <- apriorimining(mat,support = i,confidence = 0.3)
+              def <- apriori(mat, parameter = list(support = i , confidence = 0.3,
+                                                   minlen = 2),
+                             control = list(verbose = FALSE))
+              expect_equal(dim(abc@antecedent)[1], length(def@lhs))
+              expect_equal(sort(abc@items), sort(colnames(def@lhs)))
+
+  })
+
+}
+
+for (i in 1:length(supps)) {
+  j <- apriorimining(mat, supps[i], 0.1)
+  show(j)
+  cat("\n")
+}
+
+
 
 
 test_that("test if both packages generate the same confidence for the rules",

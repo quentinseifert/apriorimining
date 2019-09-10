@@ -69,7 +69,7 @@ prune <- function(sets, count, support, n) {
 
   if (!all(count / n >= support)){
     out <- which((count / n) < support)
-    sets <- sets[-out,]
+    sets <- sets[-out,, drop = FALSE]
     return(sets)
   } else {
     return(sets)

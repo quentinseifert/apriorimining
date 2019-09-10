@@ -16,6 +16,10 @@ possible_rules <- function(itemsets, k = 1) {
   for (i in 2:max(sums)) {
 
     sub_set <- sets[rowSums(sets) == i,]
+    if (is.vector(sub_set)) {
+      sub_set <- t(as.matrix(sub_set) * 1)
+      sub_set <- as(sub_set, "ngCMatrix")
+    }
     ind <- t(apply(sub_set,
                  FUN = which,
                  MARGIN = 1))
@@ -90,7 +94,6 @@ map_support <- function(mat, freq) {
   }
   return(support)
 }
-support_rhs <- map_support(both_sides, x)
 
 
 
