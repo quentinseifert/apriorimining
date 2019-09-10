@@ -50,11 +50,13 @@ setGeneric("show.rare.items",
 setMethod("show",
           "purchase",
           function(object) {
+            cat("The transactionmatrix contains",dim(object@data)[1],"transactions and"
+                ,dim(object@data)[2],"items.")
             
           })
 
 
-setMethod("show.items",
+setMethod("summary",
           "purchase",
           function (object) {
             storage <-rep(NA, length(object@items))
@@ -75,19 +77,19 @@ setMethod("show.items",
 setMethod("show.rare.items",
           "purchase",
           function (object) {
-            rare_items <- which(colMeans(testest@data) < 0.01)
-            storage <- rep(NA, length(testest@items))
+            rare_items <- which(colMeans(qo@data) < 0.01)
+            storage <- rep(NA, length(object@items))
             
-            for (i in 1:length(testest@items)) {
+            for (i in 1:length(object@items)) {
               
-              storage[i] <- sum(testest@data[,i])  
+              storage[i] <- sum(object@data[,i])  
             }
             
             ordered_storage <- order(storage)
             for(i in 1:length(rare_items)) {
               
-              cat(testest@items[ordered_storage[as.numeric(rare_items[i])]],":",
-                  sum(testest@data[,ordered_storage[as.numeric(rare_items[i])]]),"\n")
+              cat(object@items[ordered_storage[as.numeric(rare_items[i])]],":",
+                  sum(object@data[,ordered_storage[as.numeric(rare_items[i])]]),"\n")
             }
             
           })
