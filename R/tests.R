@@ -72,11 +72,40 @@ test_that("test if both packages generate the same support for the rules",
           })
 
 
+x <- list()
+y <- list()
+supps <- seq(0.1, 1, by = 0.1)
+
+for (i in 1: length(supps)){
+  x[[i]] <- apriorimining(mat, supps[i], 0.5)
+  y[[i]] <- apriori(mat, parameter = list(support = supps[i], confidence = 0.5, minlen = 2))
+}
+
+x <- list()
+y <- list()
+
+confs <- seq(0, 1, by = 0.1)
 
 
+for (i in 1:length(confs)) {
+  x[[i]] <- apriorimining(mat, 0.1, confs[i])
+  y[[i]] <-
+    apriori(mat, parameter = list(
+      support = 0.1,
+      confidence = confs[i],
+      minlen = 2
+    ))
+}
+x
 
+bool <- NULL
+for (i in 1:length(confs)) {
+  bool[i] <- nrow(y[[i]]@lhs) == nrow(x[[i]]@antecedent)
+}
+all(bool)
 
-
-
-
-
+bool <- NULL
+for (i in 1:length(confs)) {
+  bool[i] <- sort(y[[i]]@quality[,1]) == sort(x[[i]]@measurements[,1])
+}
+all(bool)

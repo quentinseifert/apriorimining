@@ -37,28 +37,7 @@ for (i in 1:length(ind)) {
 
 
 
-### plot frequent items (from purchase)
-par(mfrow = c(1,1))
-freqs <- colSums(groc@data)
-order(freqs, decreasing = TRUE)
-ordered_ind <- order(freqs, decreasing = TRUE)
-names <- groc@items[ordered_ind]
-freqs <- freqs[ordered_ind]
-barplot(freqs[1:20], names.arg = names[1:20], las = 2, cex.names = 0.75)
 
-### show frequent items (from purchase)
-means <- colMeans(groc@data)
-names <- groc@items[means >= 0.01]
-cat(names, sep ="\n")
-# with support
-cbind.data.frame(names, supp = means[means >= 0.01])
-
-### show rare items (from purchase)
-means <- colMeans(groc@data)
-names <- groc@items[means < 0.01]
-cat(names[1:50], sep ="\n")
-# with support
-cbind.data.frame(names, supp = round(means[means < 0.01], digits = 4))
 
 
 

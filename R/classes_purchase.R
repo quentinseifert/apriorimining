@@ -4,7 +4,7 @@
 library(arules)
 data("Groceries")
 input <- as(Groceries,"matrix")
-testest<-new("purchase",
+testest<-new("transactiondata",
              data = as(input,"ngCMatrix"),
              items = colnames(input)
 )
@@ -12,7 +12,7 @@ testest<-new("purchase",
 
 #### class
 
-setClass("purchase",
+setClass("transactiondata",
          slots = list(
            data = "ngCMatrix",
            items = "character"
@@ -43,7 +43,7 @@ setGeneric("rareitems",
 #### methoden
 
 setMethod("show",
-          "purchase",
+          "transactiondata",
           function(object) {
             cat("The transactionmatrix contains",dim(object@data)[1],"transactions and"
                 ,dim(object@data)[2],"items.")
@@ -53,7 +53,7 @@ setMethod("show",
 
 
 setMethod("summary",
-          "purchase",
+          "transactiondata",
           function (object) {
             storage <-rep(NA, length(object@items))
 
@@ -74,7 +74,7 @@ setMethod("summary",
 
 
 setMethod("rareitems",
-          "purchase",
+          "transactiondata",
           function (object, support, absolute = FALSE) {
 
             means <- colMeans(object@data)
@@ -99,7 +99,7 @@ setMethod("rareitems",
 
 
 setMethod("rareitems.absolut",
-          "purchase",
+          "transactiondata",
           function (object) {
             means <- colMeans(object@data)
             names <- object@items[means < 0.01]
@@ -119,7 +119,7 @@ setMethod("rareitems.absolut",
 
 
 setMethod("plot",
-          "purchase",
+          "transactiondata",
           function(x) {
 
             par(mfrow=c(1,1))

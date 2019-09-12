@@ -4,14 +4,14 @@
 # Pretty slow
 
 
-freq_items <- function(purchase, supp) {
+freq_items <- function(transactions, supp) {
 
 
   # Preparing data, much of this won't be necessary as soon as class for transaction
   # is properly integrated
 
-  dat <- purchase@data
-  item_names <- purchase@items
+  dat <- transactions@data
+  item_names <- transactions@items
 
   n <- nrow(dat)
   supps <- colMeans(dat)
@@ -45,7 +45,7 @@ freq_items <- function(purchase, supp) {
   condition <- TRUE
   k <- 2
 
-  if (nrow(set_mat) == 1) {
+  if (nrow(set_mat) == 1 || nrow(set_mat) == 0) {
     return(itemsets)
   }
 
