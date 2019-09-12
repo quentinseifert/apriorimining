@@ -35,9 +35,17 @@ setClass("transactiondata",
 setGeneric("rareitems",
            function (object, support, absolute = FALSE){
              standardGeneric("rareitems")
-           }
-          )
+           })
 
+setGeneric("frequentitems",
+           function (object, support, absolute = FALSE){
+             standardGeneric("frequentitems")
+           })
+
+setGeneric("supporttesting",
+           function (object){
+             standardGeneric("supporttesting")
+           })
 
 
 #### methoden
@@ -130,10 +138,62 @@ setMethod("plot",
             freqs <- freqs[ordered_ind]
             limit <- round(length(freqs)*0.1)
             barplot(freqs[1:limit], names.arg = names[1:limit], las = 2, cex.names = 0.75)
-
           })
 
 
+setMethod("supporttesting",
+          "transactiondata",
+          function (object) {
+            
+            storage <- NULL
+            a <- NULL
+            b <- NULL
+            mean_thresholds <- c(0.01, 0.05, 0.10, 0.20)
+            
+            means <- colMeans(object@data)
+            means <- means[order(means)]
+            
+            for (i in 1:length(mean_thresholds)) {
+              
+              storage[i] <- sum(means2 > mean_thresholds[i])
+              
+            }
+            
+            for (i in 1:length(mean_thresholds)) {
+              
+              a[i] <- paste("Minimum support of",sprintf("%3.2f", mean_thresholds[i]),"~>")
+              b[i] <- paste(storage[i],"of",length(means),"items will be frequent")
+            }
+            
+            df <- data.frame(a, b)
+            colnames(df) <- NULL
+            
+            return(df)
+          })
 
+
+setMethod("frequentitems",
+          "transactiondata",
+          function (object, support, absolute = FALSE) {
+            
+            means <- colMeans(object@data)
+            names <- object@items[means > support]
+            
+            if (absolute) {
+              absolut <- sapply(1:length(object@items), function(x) {sum(object@data[,x])})
+              values <- absolut[means > support]
+              ordered_ind <- order(values)
+              count <- values[ordered_ind]
+              item <- names[ordered_ind]
+              storage <- data.frame(item, "..." = rep("...",length(item)), count)
+            } else {
+              values <- round(means[means > support], digits = 4)
+              ordered_ind <- order(values)
+              means <- values[ordered_ind]
+              item <- names[ordered_ind]
+              storage <- data.frame(item, "..." = rep("...",length(item)), means)
+            }
+            return(storage)
+          })
 
 
