@@ -1,19 +1,38 @@
-# R-script containing the class "itemsets" and its generics and methods
+#############################################################################
+######################## CLASS: frequentsets ################################
+#############################################################################
 
+
+
+
+##############################################################################
 #### class
+
+#' frequentsets
+#' @description  frequentsets
+#' @slot sets sets in the shape of an
+#' @slot supports numeric vector containing the support for the respective sets
+#' @slot items character vector containing the itemnames
+#' @slot minsup minimum support used to determine the frequent itemsets
+#' @export
 
 setClass("frequentsets",
          slots = list(
            sets = "ngCMatrix",
-           support = "numeric",
+           supports = "numeric",
            items = "character",
            minsup = "numeric"
          ))
 
+##############################################################################
 #### generics
 
 
-#### methodes
+##############################################################################
+#### methods
+
+#' @describeIn frequentsets Shows the total number of the frequently occuring itemsets
+
 
 setMethod("show",
           "frequentsets",
@@ -23,7 +42,7 @@ setMethod("show",
                                   FUN = function(z) {which(object@sets[z,])}
             )
             counter_vec <- rep(NA,length(length(tail(idx_storage,n=1)[[1]])))
-            hlp1 <- length(object@support)
+            hlp1 <- length(object@supports)
             #hlp2 <- length(tail(idx_storage,n=1)[[1]])
 
             cat("Overall ->",hlp1,"frequently occuring itemsets\n\n")
@@ -49,9 +68,13 @@ setMethod("show",
                 counter_vec[k], "sets containing",k,"item(s)\n"
               )
             }
-            cat("\n\n\nThe term \"frequently\" refers to your chosen support of(",object@minsup,")")
+            cat("\n\n\nThe term \"frequently\" refers to your chosen supports of(",object@minsup,")")
           }
 )
+
+
+#' @describeIn frequentsets Provides an overview of the frequently overview
+#' of the frequently occuring itemsets
 
 setMethod("summary",
           "frequentsets",
@@ -59,13 +82,13 @@ setMethod("summary",
             sizes <- unique(rowSums(object@sets))
             freqs <- sapply(sizes, function(a) sum(rowSums(object@sets) == a))
             avgs <- sapply(sizes, function(a) {
-              sups <- object@support[rowSums(object@sets) == a]
+              sups <- object@supports[rowSums(object@sets) == a]
               avgs <- sum(sups) / length(sups)
               return(avgs)
             })
-            cat("minimum support =", object@minsup, "\n\n")
+            cat("minimum supports =", object@minsup, "\n\n")
             frame <- data.frame(set_sizes = sizes, frequencies = freqs,
-                                average_support = avgs)
+                                average_supports = avgs)
 
             top_items <- object@items[order(colSums(object@sets), decreasing = TRUE)]
             if (ncol(object@sets) > 5) {
@@ -79,6 +102,10 @@ setMethod("summary",
           }
         )
 
+
+
+#' Plots a histogram of the support distribution for each set size
+#' @describeIn frequentsets Plots a histogram of the support distribution for each set size
 
 setMethod("plot",
           "frequentsets",
@@ -114,8 +141,8 @@ setMethod("plot",
 
             for (i in 1:longest_set) {
 
-              hist(x@support[seq(1:counter_vec[i])],
-                   xlab=c("support",i,"item(s)"),
+              hist(x@supports[seq(1:counter_vec[i])],
+                   xlab=c("supports",i,"item(s)"),
                    freq=T,
                    main=c(""),
                    breaks=20,
@@ -125,18 +152,6 @@ setMethod("plot",
 
             }
          })
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

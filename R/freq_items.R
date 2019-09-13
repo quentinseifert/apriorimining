@@ -1,23 +1,39 @@
-####### FREQUENT SETS #########
-# In its current state, this function only returns only the sum of frequent itemsets.
-# Once the necessary classes are established, this will be changed.
-# Pretty slow
+#############################################################################
+######################## Function: freq_items ###############################
+#############################################################################
 
 
-freq_items <- function(transactions, supp) {
+
+#' Find frequent itemsets
+#' @description Demands transactionsmatrix and minimum support.
+#' \code{freq_item} finds every frequent itemset depending
+#' on the chosen minimum support.
+#' @param input Binary matrix containing transaction data, with rows
+#' representing transactions and columns representing items. Can be
+#' either logical or numeric, every value has to be either 0 / 1 or
+#' FALSE / TRUE. (0 / FALSE if item is not bought). Columns should be
+#' named. Also takes an object class \emph{transactiondata}-
+#' @param m_sup User specified minimum support
+#' @return Returns an object of class \emph{frequentsets}
+#' @export
+#' @import Matrix
+#' @include classes_frequentsets.R classes_transactiondata.R
+
+
+freq_items <- function(input, m_sup) {
 
 
   # Preparing data, much of this won't be necessary as soon as class for transaction
   # is properly integrated
 
-  dat <- transactions@data
-  item_names <- transactions@items
+  dat <- input@data
+  item_names <- input@items
 
   n <- nrow(dat)
-  supps <- colMeans(dat)
-  sets <- which(supps >= supp)
+  supports <- colMeans(dat)
+  sets <- which(supports >= m_sup)
   items <- item_names[sets]
-  supps <- supps[which(supps >= supp)]
+  supports <- supports[which(supports >= m_sup)]
   # throwing out items out of the data that are not frequent as they will not
   # matter for larger itemsets
 
@@ -36,9 +52,9 @@ freq_items <- function(transactions, supp) {
 
   itemsets <- new("frequentsets",
                  sets = as(set_mat, "ngCMatrix"),
-                 support = supps,
+                 supports = supports,
                  items = items,
-                 minsup = supp)
+                 minsup = m_sup)
 
   # condition for while loop
 
@@ -98,10 +114,10 @@ freq_items <- function(transactions, supp) {
 
       # Throw out sets with support below minium
 
-      sets <- prune(sets, count, supp, n)
-      n_set_mat <- prune(n_set_mat, count, supp, n)
+      sets <- prune(sets, count, m_sup, n)
+      n_set_mat <- prune(n_set_mat, count, m_sup, n)
 
-      sup <- (count / n)[count / n >= supp]
+      sup <- (count / n)[count / n >= m_sup]
 
 
       # k + 1 for next iteration
@@ -119,9 +135,9 @@ freq_items <- function(transactions, supp) {
       if (nrow(n_set_mat) > 0) {
         itemsets <- new("frequentsets",
                         sets = rbind(itemsets@sets, n_set_mat),
-                       support = c(itemsets@support, sup),
+                       supports = c(itemsets@supports, sup),
                        items = items,
-                       minsup = supp)
+                       minsup = m_sup)
 
         old_set_mat <- n_set_mat
       } else {

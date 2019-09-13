@@ -9,3 +9,13 @@ Description: More about what it does (maybe more than one line)
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true
+RoxygenNote: 6.1.1
+Collate: 
+    'classes_transactiondata.R'
+    'classes_frequentsets.R'
+    'apriorimining.R'
+    'classes_associationrules.R'
+    'create_transactionmatrix.R'
+    'freq_items.R'
+    'helper_fcts.R'
+    'rules.R'

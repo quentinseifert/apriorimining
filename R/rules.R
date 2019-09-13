@@ -1,7 +1,20 @@
-####### Function 'rules': Determines association rules
+#############################################################################
+######################## Function: rules ####################################
+#############################################################################
 
 
-rules <- function(itemsets, support, confidence) {
+
+#' Generate association rules
+#' @description  Demands the frequent itemsets and user specified minimum
+#' confidence. It generates all possible association rules
+#' @param itemsets Object of class frequentsets
+#' @param m_conf User specified minimum confidence, eqn{m_conf\isinE(0, 1)}
+#' @return Object of class associationrules
+#' @export
+#' @import Matrix
+#' @include classes_frequentsets.R classes_associationrules.R
+
+rules <- function(itemsets, m_conf) {
 
   # possible_rules returns list with lhs and rhs of all possible rules
 
@@ -22,16 +35,16 @@ rules <- function(itemsets, support, confidence) {
 
   conf <- supp_both / supp_lhs
 
-  # check which confidence is >= minconfidence
+  # check which confidence is >= m_conf
 
-  ind <- which(conf >= confidence)
+  ind <- which(conf >= m_conf)
 
   # throw out rules with confidence below threshold
 
   lhs <- lhs[ind,]
   rhs <- rhs[ind,]
 
-  # prepare content for object of class ass_rules
+  # prepare content for object of class association rules
 
   supp_both <- supp_both[ind]
   supp_lhs <- supp_lhs[ind]
