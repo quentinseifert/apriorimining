@@ -6,19 +6,56 @@
 
 
 
-item_count <- function(dat){
-  count <- Matrix::colSums(transactions)
-  return(count)
-}
 
 
-# 'is_in' Check whether a set is already in a matrix of sets
-# currently not used, most likely unnecessary
+generate_sets <- function(sets, k) {
+  ind <- t(apply(sets, 1, which))
+  if (k == 2) {
+    ind <- as.matrix(ind)
+    new_sets <- t(combn(1:nrow(sets), 2))
+  } else {
+    un_item <- unique(as.vector(ind))
+    new_sets <- cbind(apply(ind,
+                            FUN = rep,
+                            MARGIN = 2,
+                            each = length(un_item)),
+                      rep(un_item, times = nrow(sets)))
+  }
 
-is_in <- function(mat, new_set){
-  if(nrow(mat) == 0){return(FALSE)}
-  bool <- apply(mat, FUN = function(a) all(is.element(new_set, a)), MARGIN = 1)
-  return(bool)
+
+  out <- apply(new_sets,
+               FUN = function(a) return(any(duplicated(a))),
+               MARGIN = 1
+  )
+
+
+  if (any(out)) {
+    new_sets <- new_sets[-which(out),]
+  }
+
+
+  new_sets <- t(apply(new_sets, 1, sort))
+  new_sets <- unique(new_sets)
+
+
+  cols <- ncol(sets)
+  rows <- nrow(new_sets)
+
+  new_sets <- t(sparseMatrix(i = as.vector(t(new_sets)),
+                             j = rep(1:rows, each = ncol(new_sets)),
+                             dims = c(cols, rows)
+  )
+  )
+
+  if (k > 2) {
+    prod <- (new_sets * 1) %*% t(sets * 1)
+    ind <- which(apply(prod, 1, function(a) {
+      return(sum(a == k - 1) == k)
+    }))
+
+    new_sets <- new_sets[ind,, drop = FALSE]
+  }
+  return(new_sets)
 }
 
 # 'set_to_matrix': Transform a set of items (vector of strings)
