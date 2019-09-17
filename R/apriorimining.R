@@ -20,8 +20,6 @@
 #' @param m_conf User specified minimum confidence
 #' @return Object of class associationrules
 #' @export
-#' @import Matrix
-#' @import methods
 #' @include classes_frequentsets.R classes_transactiondata.R
 #' classes_associationrules.R
 
@@ -32,7 +30,7 @@ apriorimining <- function(input, m_sup, m_conf) {
   a <- create_transaction(input)
 
   # a will contain object of class "itemsets"
-  a <- freq_items(transactions = a, supp = m_sup)
+  a <- freq_items(input = a, m_sup = m_sup)
   if (all(rowSums(a@sets) == 1 ) || nrow(a@sets) == 0) {
     empty <- new("associationrules",
                  antecedent = t(sparseMatrix(i = {}, j = {}, dims = c(0, 0))),
@@ -42,7 +40,7 @@ apriorimining <- function(input, m_sup, m_conf) {
     return(empty)
   }
   # pass a on in order to determine association rules
-  a <- rules(a, m_sup, m_conf)
+  a <- rules(a, m_conf)
 
 
   return(a)

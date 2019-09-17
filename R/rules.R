@@ -11,7 +11,6 @@
 #' @param m_conf User specified minimum confidence, eqn{m_conf\isinE(0, 1)}
 #' @return Object of class associationrules
 #' @export
-#' @import Matrix
 #' @include classes_frequentsets.R classes_associationrules.R
 
 rules <- function(itemsets, m_conf) {

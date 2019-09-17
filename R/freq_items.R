@@ -16,7 +16,6 @@
 #' @param m_sup User specified minimum support
 #' @return Returns an object of class \emph{frequentsets}
 #' @export
-#' @import Matrix
 #' @include classes_frequentsets.R classes_transactiondata.R
 
 
