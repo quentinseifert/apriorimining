@@ -1,16 +1,21 @@
-#############################################################################
+##############################################################################
 ######################## CLASS: associationrules #############################
-#############################################################################
+##############################################################################
 
-#############################################################################
+##############################################################################
 #### class
 
 #' associationrules
-#' @description Class containing association rules
-#' @slot items character vector containing item names
-#' @slot antecedent contains the antecedents as a ngCMatrix
-#' @slot consequent contains the consequents as a ngCMatrix
-#' @slot measurements quality measurements
+#' @description The S4 class \code{associationrules} characterizes the generated
+#' association rules using four different slots. An object of class
+#' \code{associationrules} can be analysed using \code{show} and \code{summary}
+#' @slot items Character vector containing the itemnames of the transactionmatrix
+#' @slot antecedent Each antecedent of every generated association rule 
+#' in the shape of an sparsematrix (ngCMatrix) 
+#' @slot consequent Each consequent of every generated association rule 
+#' in the shape of an sparsematrix (ngCMatrix) 
+#' @slot measurements Quality measurements (support, confidence, lift)
+#' for every generated association rule 
 #' @export
 
 setClass("associationrules",
@@ -22,11 +27,11 @@ setClass("associationrules",
          ))
 
 
-
+#############################################################################
 #### methodes
 
 
-#' @describeIn associationrules shows
+#' @describeIn associationrules Shows the number of the generated association rules
 
 setMethod("show",
           "associationrules",

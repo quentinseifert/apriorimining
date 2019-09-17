@@ -2,18 +2,20 @@
 ######################## CLASS: frequentsets ################################
 #############################################################################
 
-
-
-
-##############################################################################
+#############################################################################
 #### class
 
 #' frequentsets
-#' @description  frequentsets
-#' @slot sets sets in the shape of an
-#' @slot supports numeric vector containing the support for the respective sets
-#' @slot items character vector containing the itemnames
-#' @slot minsup minimum support used to determine the frequent itemsets
+#' @description The S4 class \code{frequentsets} characterizes the frequently
+#' occuring itemsets using four different slots. Objects of the class
+#' \code{frequentsets} can be analyzed with \code{show}, 
+#' \code{summary} and \code{plot}.
+#' @slot sets Every generated itemset summarized in the shape of an sparsematrix
+#' (ngCMatrix)
+#' @slot supports Numeric vector containing the calculated support for the
+#' respective sets
+#' @slot items Character vector containing the itemnames of the transactionmatrix
+#' @slot minsup User specified minimum support
 #' @export
 
 setClass("frequentsets",
@@ -73,8 +75,7 @@ setMethod("show",
 )
 
 
-#' @describeIn frequentsets Provides an overview of the frequently overview
-#' of the frequently occuring itemsets
+#' @describeIn frequentsets Provides an overview of the frequently occuring itemsets
 
 setMethod("summary",
           "frequentsets",
@@ -102,9 +103,6 @@ setMethod("summary",
           }
         )
 
-
-
-#' Plots a histogram of the support distribution for each set size
 #' @describeIn frequentsets Plots a histogram of the support distribution for each set size
 
 setMethod("plot",
