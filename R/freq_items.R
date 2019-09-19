@@ -17,9 +17,18 @@
 #' @return Returns an object of class \code{frequentsets}
 #' @export
 #' @include classes_frequentsets.R classes_transactiondata.R
-
+#' @import methods
+#' @import Matrix
 
 freq_items <- function(input, m_sup) {
+
+  if (m_sup <= 0 || m_sup > 1) {
+    stop("m_sup hast to be between 0 and 1")
+  }
+
+  if (class(input) != "transactiondata") {
+    input <- create_transaction(input)
+  }
 
 
   # Preparing data, much of this won't be necessary as soon as class for transaction

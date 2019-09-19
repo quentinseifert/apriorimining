@@ -13,8 +13,15 @@
 #' @return Returs an object of class \code{associationrules}
 #' @export
 #' @include classes_frequentsets.R classes_associationrules.R
+#' @import methods
+#' @import Matrix
 
 rules <- function(itemsets, m_conf) {
+
+  if (m_conf <= 0 || m_conf > 1) {
+    stop("m_conf hast to be between 0 and 1")
+  }
+
 
   # possible_rules returns list with lhs and rhs of all possible rules
 
@@ -58,10 +65,12 @@ rules <- function(itemsets, m_conf) {
   measurements <- cbind(supp_both, conf, lift)
 
   a_rules <- new("associationrules",
-                   antecedent = lhs,
-                   consequent = rhs,
-                   measurements = measurements,
-                   items = itemsets@items)
+                 antecedent = lhs,
+                 consequent = rhs,
+                 measurements = measurements,
+                 items = itemsets@items,
+                 m_values = c(itemsets@minsup, m_conf)
+                 )
 
   return(a_rules)
 

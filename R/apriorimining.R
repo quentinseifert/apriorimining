@@ -23,20 +23,35 @@
 #' @export
 #' @include classes_frequentsets.R classes_transactiondata.R
 #' classes_associationrules.R
+#' @import methods
+#' @import Matrix
 
 apriorimining <- function(input, m_sup, m_conf) {
 
 
-  # input is changed to an object of class "transactiondata" called transaction_mat
-  a <- create_transaction(input)
+  if (m_sup <= 0 || m_sup > 1) {
+    stop("m_sup has to be between 0 and 1")
+  }
 
-  # a will contain object of class "itemsets"
-  a <- freq_items(input = a, m_sup = m_sup)
+  if (m_conf <= 0 || m_conf > 1) {
+    stop("m_conf has to between 0 and 1")
+  }
+
+
+
+  # input is changed to an object of class "transactiondata" called transaction_mat
+  if (class(input) != "transactiondata") {
+    input <- create_transaction(input)
+  }
+
+  # a will contain object of class "frequentsets"
+  a <- freq_items(input = input, m_sup = m_sup)
+
   if (all(rowSums(a@sets) == 1 ) || nrow(a@sets) == 0) {
     empty <- new("associationrules",
                  antecedent = t(sparseMatrix(i = {}, j = {}, dims = c(0, 0))),
                  consequent = t(sparseMatrix(i = {}, j = {}, dims = c(0, 0))),
-                 measurements = matrix(),
+                 measurements = matrix(ncol = 3),
                  items = character(0))
     return(empty)
   }
