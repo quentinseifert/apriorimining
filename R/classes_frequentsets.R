@@ -18,8 +18,9 @@
 #' @slot minsup User specified minimum support
 #' @export
 #' @import methods
-#' @import Matrix
-#' @import graphics
+#' @importFrom Matrix colSums rowSums
+#' @importClassesFrom Matrix ngCMatrix
+#' @importFrom graphics abline barplot hist legend par
 
 setClass("frequentsets",
          slots = list(

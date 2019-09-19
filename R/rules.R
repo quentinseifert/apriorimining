@@ -13,8 +13,8 @@
 #' @return Returs an object of class \code{associationrules}
 #' @export
 #' @include classes_frequentsets.R classes_associationrules.R
-#' @import methods
-#' @import Matrix
+#' @importFrom methods new
+#' @importFrom Matrix colSums rowSums
 
 rules <- function(itemsets, m_conf) {
 

@@ -41,5 +41,7 @@ in the shape of an sparsematrix (ngCMatrix)}
 
 \item{\code{measurements}}{Quality measurements (support, confidence, lift)
 for every generated association rule}
+
+\item{\code{m_values}}{User specified minimum values for support and confidence}
 }}
 

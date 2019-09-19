@@ -23,8 +23,9 @@
 #' @export
 #' @include classes_frequentsets.R classes_transactiondata.R
 #' classes_associationrules.R
-#' @import methods
-#' @import Matrix
+#' @importFrom Matrix sparseMatrix
+#' @importClassesFrom Matrix ngCMatrix
+#' @importFrom methods new
 
 apriorimining <- function(input, m_sup, m_conf) {
 

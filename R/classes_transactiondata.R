@@ -15,8 +15,8 @@
 #' trancastionmatrix
 #' @export
 #' @import methods
-#' @import Matrix
-#' @import graphics
+#' @importClassesFrom Matrix ngCMatrix
+#' @importFrom graphics abline barplot hist legend par
 
 setClass("transactiondata",
          slots = list(

@@ -4,8 +4,8 @@
 
 #' @include classes_transactiondata.R classes_frequentsets.R classes_associationrules.R
 #' @import methods
-#' @import Matrix
-#' @import utils
+#' @importFrom Matrix rowSums colSums sparseMatrix
+#' @importFrom utils combn
 
 
 

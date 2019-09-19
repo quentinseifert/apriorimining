@@ -19,7 +19,7 @@
 #' @slot m_values User specified minimum values for support and confidence
 #' @export
 #' @import methods
-#' @import Matrix
+#' @importClassesFrom Matrix ngCMatrix
 
 setClass("associationrules",
          slots = list(

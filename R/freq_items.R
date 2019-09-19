@@ -17,8 +17,9 @@
 #' @return Returns an object of class \code{frequentsets}
 #' @export
 #' @include classes_frequentsets.R classes_transactiondata.R
-#' @import methods
-#' @import Matrix
+#' @importFrom methods as new
+#' @importClassesFrom Matrix ngCMatrix
+#' @importFrom Matrix colSums rowSums
 
 freq_items <- function(input, m_sup) {
 
