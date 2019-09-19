@@ -5,11 +5,12 @@
 
 
 #' Generate association rules
-#' @description  Demands the frequent itemsets and user specified minimum
-#' confidence. It generates all possible association rules
+#' @description The function \code{rules} generates all possible association rules.
+#' The function demands the frequently occuring itemsets and a user specified
+#' minimum confidence.
 #' @param itemsets Object of class frequentsets
-#' @param m_conf User specified minimum confidence, eqn{m_conf\isinE(0, 1)}
-#' @return Object of class associationrules
+#' @param m_conf User specified minimum confidence
+#' @return Returs an object of class \code{associationrules}
 #' @export
 #' @include classes_frequentsets.R classes_associationrules.R
 

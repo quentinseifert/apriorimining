@@ -4,21 +4,22 @@
 
 #' Determine association rules
 #' @description Mines association rules using the Apriori Algorithm.
-#' Demands a transactionmatrix, user specified minimum
+#' The function demands a transactionmatrix, user specified minimum
 #' support and minimum confidence and returns generated association rules.
 #' First it transforms the data using \code{create_transactionmatrix}, then
 #' it uses \code{freq_items} to find frequent itemsets and finally
-#' generates association rules using \code{rules}. These function can also be
-#' accessed seperately.
+#' generates association rules using \code{rules}. These functions can also
+#' be accessed seperately.
+#' The function \code{apriorimining} returns an object of class
+#' associationrules, which can be analysed using \code{show} and \code{summary}.
 #' @param input Binary matrix containing transaction data, with rows
 #' representing transactions and columns representing items. Can be
 #' either logical or numeric, every value has to be either 0 / 1 or
-#' FALSE / TRUE.
-#' (0 / FALSE if item is not bought)
-#' Columns should be named.
+#' FALSE / TRUE (0 or FALSE if item is not bought). Columns should be
+#' named.
 #' @param m_sup User specified minimum support
 #' @param m_conf User specified minimum confidence
-#' @return Object of class associationrules
+#' @return Returns an object of class \code{associationrules}
 #' @export
 #' @include classes_frequentsets.R classes_transactiondata.R
 #' classes_associationrules.R

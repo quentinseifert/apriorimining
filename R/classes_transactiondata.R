@@ -1,17 +1,18 @@
 #############################################################################
-######################## CLASS: transactiondata #############################
+######################## Class: transactiondata #############################
 #############################################################################
 
 #############################################################################
 #### class
 
-#' transactiondata
+#' Transactiondata
 #' @description The S4 class \code{transactiondata} characterizes the 
 #' entered transactionmatrix using two different slots. An object of the 
 #' class \code{transactiondata} can be analyzed with \code{show}, \code{summary}
-#' ,\code{plot}, \code{itemtail} and \code{tryminimum}
+#' ,\code{plot}, \code{itemtail} and \code{tryminimum}.
 #' @slot data Transaction data in the shape of an sparsematrix (ngCMatrix)
-#' @slot items Character vector containing the itemnames of the trancastionmatrix
+#' @slot items Character vector containing the itemnames of the
+#' trancastionmatrix
 #' @export
 
 setClass("transactiondata",
