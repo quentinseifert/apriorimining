@@ -6,17 +6,19 @@
 
 #' Generate association rules
 #' @description The function \code{rules} generates all possible association rules.
-#' The function demands the frequently occuring itemsets and a user specified
+#' The function demands the frequently occuring item sets and a user specified
 #' minimum confidence.
-#' @param itemsets Object of class frequentsets
+#' @param itemsets Object of class FrequentSets
 #' @param m_conf User specified minimum confidence
-#' @return Returs an object of class \code{associationrules}
+#' @return Returs an object of class \code{AssociationRules}
 #' @export
 #' @include classes_frequentsets.R classes_associationrules.R
 #' @importFrom methods new
 #' @importFrom Matrix colSums rowSums
 
 rules <- function(itemsets, m_conf) {
+
+  # check m_conf
 
   if (m_conf <= 0 || m_conf > 1) {
     stop("m_conf hast to be between 0 and 1")
@@ -64,7 +66,7 @@ rules <- function(itemsets, m_conf) {
 
   measurements <- cbind(supp_both, conf, lift)
 
-  a_rules <- new("associationrules",
+  a_rules <- new("AssociationRules",
                  antecedent = lhs,
                  consequent = rhs,
                  measurements = measurements,
@@ -73,5 +75,4 @@ rules <- function(itemsets, m_conf) {
                  )
 
   return(a_rules)
-
 }

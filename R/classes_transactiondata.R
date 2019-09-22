@@ -1,14 +1,14 @@
 #############################################################################
-######################## Class: transactiondata #############################
+######################## Class: TransactionData #############################
 #############################################################################
 
 #############################################################################
 #### class
 
-#' Transactiondata
-#' @description The S4 class \code{transactiondata} characterises the
+#' TransactionData
+#' @description The S4 class \code{TransactionData} characterises the
 #' entered transaction matrix using two different slots. An object of the
-#' class \code{transactiondata} can be analysed with \code{show}, \code{summary}
+#' class \code{TransactionData} can be analysed with \code{show}, \code{summary}
 #' ,\code{plot}, \code{itemtail} and \code{tryminimum}.
 #' @slot data Transaction matrix in the shape of a sparsematrix (ngCMatrix)
 #' @slot items Character vector containing the item names of the
@@ -18,22 +18,34 @@
 #' @importClassesFrom Matrix ngCMatrix
 #' @importFrom graphics abline barplot hist legend par
 
-setClass("transactiondata",
-         slots = list(
-           data = "ngCMatrix",
-           items = "character"
-         ))
+setClass("TransactionData",
+         slots = list(data = "ngCMatrix",
+                      items = "character"
+                      ))
 
 ###############################################################################
 #### generics
 
+#' Test minimum support
+#' @param object Object of class TransactionData
+#' @param support user specified minimum support
+#' @param absolute logical
+#' @param rare logical
+#' @export
+
 setGeneric("itemtail",
            function (object, support, absolute = FALSE, rare = FALSE){
+
              standardGeneric("itemtail")
            })
 
+#' Test influence of different minimum supports
+#' @param object Object of class TransActiondata
+#' @export
+
 setGeneric("tryminimum",
            function (object){
+
              standardGeneric("tryminimum")
            })
 
@@ -41,32 +53,33 @@ setGeneric("tryminimum",
 #### methods
 
 
-#' @describeIn transactiondata Shows number of transactions and items in the transaction matrix
-#' @param object Object of class \code{transactiondata}
+#' @describeIn TransactionData Shows number of transactions and items
+#' in the transaction matrix
+#' @param object Object of class \code{TransactionData}
 
 setMethod("show",
-          "transactiondata",
+          "TransactionData",
           function(object) {
-            
-            cat("The transactionmatrix contains",dim(object@data)[1],"transactions and"
-                ,dim(object@data)[2],"items.")
 
+            cat("The transactionmatrix contains", dim(object@data)[1],
+                "transactions and", dim(object@data)[2], "items.")
           })
 
 
-#' @describeIn transactiondata Returns data.frame of each item in the transactionmatrix and
-#' their frequencies
+#' @describeIn TransactionData Returns data.frame of each item in the
+#' transaction matrix and their frequencies
+#' @export
 
 setMethod("summary",
-          "transactiondata",
-          function (object) {
+          "TransactionData",
+          function(object) {
+
             storage <-rep(NA, length(object@items))
 
-            #calculate the sum of each column, to get the total frequencie
-            #of each item
+            # calculate the sum of each column, to get the total frequency
+            # of each item
 
             for (i in 1:length(object@items)) {
-
               storage[i] <- sum(object@data[,i])
             }
 
@@ -85,30 +98,27 @@ setMethod("summary",
           })
 
 
-
-
-#' @describeIn transactiondata Returns data.frame of either the most freqeunt
+#' @describeIn TransactionData Returns data.frame of either the most freqeunt
 #' single items or the most rare single items.
 #' User can choose wether the occurence of the items is displayed in terms
 #' of absolute or relative values.
 #' @param support User specified minimum support
 #' @param absolute Logical
 #' @param rare Logical
+#' @export
 
 setMethod("itemtail",
-          "transactiondata",
+          "TransactionData",
           function (object, support, absolute = FALSE, rare = FALSE) {
 
-          #controlflow divided into user specified
+            if (rare) {
 
-          if (rare) {
-
-            means <- colMeans(object@data)
-            names <- object@items[means < support]
+              means <- colMeans(object@data)
+              names <- object@items[means < support]
 
             if (absolute) {
 
-              absolut <- sapply(1:length(object@items), function(x) {sum(object@data[,x])})
+              absolut <- sapply(1:length(object@items), function(x) sum(object@data[,x]))
               values <- absolut[means < support]
               ordered_ind <- order(values)
               frequency <- values[ordered_ind]
@@ -150,41 +160,46 @@ setMethod("itemtail",
             return(storage)
           })
 
-#' @describeIn transactiondata Bar plot of the most frequently occuring
+#' @describeIn TransactionData Bar plot of the most frequently occuring
 #' items displaying their absolute frequencies
-#' @param x Object of class \code{transactiondata}
+#' @param x Object of class \code{TransactionData}
+#' @export
 
 setMethod("plot",
-          "transactiondata",
+          "TransactionData",
           function(x) {
-            
-            
+
             # calculating the absolute frequency for each item
 
             freqs <- colSums(x@data)
-            
+
             # create an index vector containing the positions
-            # of the ordered frequencies 
-            
+            # of the ordered frequencies
+
             ordered_idx <- order(freqs, decreasing = TRUE)
-            
+
             names <- x@items[ordered_idx]
             freqs <- freqs[ordered_idx]
             limit <- round(length(freqs)*0.1)
-            
-            barplot(freqs[1:limit], names.arg = names[1:limit], las = 2, cex.names = 0.75)
+
+            barplot(freqs[1:limit],
+                    names.arg = names[1:limit],
+                    las = 2,
+                    cex.names = 0.75
+                    )
           })
 
 
 
-#' @describeIn transactiondata Provides the number of frequent items for four
+#' @describeIn TransactionData Provides the number of frequent items for four
 #'different minimum support values, giving an impression of the influence of
 #'the minimum support
+#' @export
 
 
 setMethod("tryminimum",
-          "transactiondata",
-          function (object) {
+          "TransactionData",
+          function(object) {
 
             storage <- NULL
             a <- NULL
@@ -195,9 +210,7 @@ setMethod("tryminimum",
             means <- means[order(means)]
 
             for (i in 1:length(minsups)) {
-
               storage[i] <- sum(means > minsups[i])
-
             }
 
             for (i in 1:length(minsups)) {

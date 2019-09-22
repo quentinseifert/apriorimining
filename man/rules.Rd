@@ -7,15 +7,15 @@
 rules(itemsets, m_conf)
 }
 \arguments{
-\item{itemsets}{Object of class frequentsets}
+\item{itemsets}{Object of class FrequentSets}
 
 \item{m_conf}{User specified minimum confidence}
 }
 \value{
-Returs an object of class \code{associationrules}
+Returs an object of class \code{AssociationRules}
 }
 \description{
 The function \code{rules} generates all possible association rules.
-The function demands the frequently occuring itemsets and a user specified
+The function demands the frequently occuring item sets and a user specified
 minimum confidence.
 }

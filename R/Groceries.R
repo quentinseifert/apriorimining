@@ -3,7 +3,7 @@
 #' The data consists of 9835 transactions and 169 items. In the present package,
 #' data is in the shape of a sparse matrix
 #'
-#' @format Object of class \code{transactiondata}
+#' @format Object of class \code{TransactionData}
 #' @source obtained from the \code{arules} package, created by Michael Hahsler,
 #' Kurt Hornik and Thomas Reutterer.
 #' @references Michael Hahsler, Kurt Hornik, and Thomas Reutterer (2006) Implications

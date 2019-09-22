@@ -1,4 +1,4 @@
 library(testthat)
-library(unnamed)
+library(apriorimining)
 
-test_check("unnamed")
+test_check("apriorimining")

@@ -2,7 +2,7 @@
 % Please edit documentation in R/create_transactionmatrix.R
 \name{create_transaction}
 \alias{create_transaction}
-\title{Transform the transactionmatrix}
+\title{Transform the transaction matrix}
 \usage{
 create_transaction(input)
 }
@@ -14,10 +14,10 @@ FALSE / TRUE (0 or FALSE if item is not bought). Columns should be
 named.}
 }
 \value{
-Returns an object of class \code{transactiondata}
+Returns an object of class \code{TransactionData}
 }
 \description{
-Transforms a given transactionmatrix into an object
-of class transactiondata, enabling the user to examine the transactiondata
-with provided methodes.
+Transforms a given transaction matrix into an object
+of class TransactionData, enabling the user to examine the TransactionData
+with the provided methodes.
 }

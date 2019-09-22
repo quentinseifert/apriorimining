@@ -2,7 +2,7 @@
 % Please edit documentation in R/freq_items.R
 \name{freq_items}
 \alias{freq_items}
-\title{Find frequent itemsets}
+\title{Find frequent item sets}
 \usage{
 freq_items(input, m_sup)
 }
@@ -11,15 +11,15 @@ freq_items(input, m_sup)
 representing transactions and columns representing items. Can be
 either logical or numeric, every value has to be either 0 / 1 or
 FALSE / TRUE (0 or FALSE if item is not bought). Columns should be
-named. Also takes an object class \code{transactiondata}.}
+named. \code{freq_item} also takes an object class \code{TransactionData}.}
 
 \item{m_sup}{User specified minimum support}
 }
 \value{
-Returns an object of class \code{frequentsets}
+Returns an object of class \code{FrequentSets}
 }
 \description{
-\code{freq_item} finds every frequent itemset depending
-on the chosen minimum support. The function demands a transactionsmatrix
+\code{freq_item} finds every frequent item set depending
+on the chosen minimum support. The function demands a transaction matrix
 and a user specified minimum support.
 }

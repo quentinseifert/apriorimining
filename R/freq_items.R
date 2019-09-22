@@ -4,7 +4,7 @@
 
 
 
-#' Find frequent itemsets
+#' Find frequent item sets
 #' @description \code{freq_item} finds every frequent item set depending
 #' on the chosen minimum support. The function demands a transaction matrix
 #' and a user specified minimum support.
@@ -12,9 +12,9 @@
 #' representing transactions and columns representing items. Can be
 #' either logical or numeric, every value has to be either 0 / 1 or
 #' FALSE / TRUE (0 or FALSE if item is not bought). Columns should be
-#' named. \code{freq_item} also takes an object class \code{transactiondata}.
+#' named. \code{freq_item} also takes an object class \code{TransactionData}.
 #' @param m_sup User specified minimum support
-#' @return Returns an object of class \code{frequentsets}
+#' @return Returns an object of class \code{FrequentSets}
 #' @export
 #' @include classes_frequentsets.R classes_transactiondata.R
 #' @importFrom methods as new
@@ -27,10 +27,9 @@ freq_items <- function(input, m_sup) {
     stop("m_sup hast to be between 0 and 1")
   }
 
-  if (class(input) != "transactiondata") {
+  if (class(input) != "TransactionData") {
     input <- create_transaction(input)
   }
-
 
   # Preparing data, much of this won't be necessary as soon as class for transaction
   # is properly integrated
@@ -56,9 +55,9 @@ freq_items <- function(input, m_sup) {
   # save support of frequent items
 
 
-  # create object of class frequentsets saving all relevant information
+  # create object of class FrequentSets saving all relevant information
 
-  itemsets <- new("frequentsets",
+  itemsets <- new("FrequentSets",
                   sets = as(sets, "ngCMatrix"),
                   supports = supports,
                   items = items,
@@ -113,7 +112,7 @@ freq_items <- function(input, m_sup) {
 
 
     if (nrow(sets) > 0) {
-      itemsets <- new("frequentsets",
+      itemsets <- new("FrequentSets",
                       sets = rbind(itemsets@sets, sets),
                       supports = c(itemsets@supports, sup),
                       items = items,
@@ -125,11 +124,4 @@ freq_items <- function(input, m_sup) {
   }
   return(itemsets)
 }
-
-
-
-
-
-
-############# END
 

@@ -4,7 +4,7 @@
 \name{Groceries}
 \alias{Groceries}
 \title{Data: Groceries}
-\format{Object of class \code{transactiondata}}
+\format{Object of class \code{TransactionData}}
 \source{
 obtained from the \code{arules} package, created by Michael Hahsler,
 Kurt Hornik and Thomas Reutterer.
