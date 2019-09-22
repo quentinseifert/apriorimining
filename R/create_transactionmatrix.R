@@ -2,8 +2,8 @@
 ######################## Function: create_transaction #######################
 #############################################################################
 
-#' Transform the transactionmatrix
-#' @description Transforms a given transactionmatrix into an object
+#' Transform the transaction matrix
+#' @description Transforms a given transaction matrix into an object
 #' of class transactiondata, enabling the user to examine the transactiondata
 #' with provided methodes.
 #' @param input Binary matrix containing transaction data, with rows

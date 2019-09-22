@@ -5,14 +5,14 @@
 
 
 #' Find frequent itemsets
-#' @description \code{freq_item} finds every frequent itemset depending
-#' on the chosen minimum support. The function demands a transactionsmatrix
+#' @description \code{freq_item} finds every frequent item set depending
+#' on the chosen minimum support. The function demands a transaction matrix
 #' and a user specified minimum support.
 #' @param input Binary matrix containing transaction data, with rows
 #' representing transactions and columns representing items. Can be
 #' either logical or numeric, every value has to be either 0 / 1 or
 #' FALSE / TRUE (0 or FALSE if item is not bought). Columns should be
-#' named. Also takes an object class \code{transactiondata}.
+#' named. \code{freq_item} also takes an object class \code{transactiondata}.
 #' @param m_sup User specified minimum support
 #' @return Returns an object of class \code{frequentsets}
 #' @export

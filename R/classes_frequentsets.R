@@ -6,15 +6,15 @@
 #### class
 
 #' Frequentsets
-#' @description The S4 class \code{frequentsets} characterizes the frequently
-#' occuring itemsets using four different slots. Objects of the class
-#' \code{frequentsets} can be analyzed with \code{show},
+#' @description The S4 class \code{frequentsets} characterises the frequently
+#' occuring item sets using four different slots. Objects of the class
+#' \code{frequentsets} can be analysed with \code{show},
 #' \code{summary} and \code{plot}.
-#' @slot sets Every generated itemset summarized in the shape of an sparsematrix
+#' @slot sets Every generated item set summarised in the shape of a sparsematrix
 #' (ngCMatrix)
 #' @slot supports Numeric vector containing the calculated support for the
 #' respective sets
-#' @slot items Character vector containing the itemnames of the transactionmatrix
+#' @slot items Character vector containing the item names of the transaction matrix
 #' @slot minsup User specified minimum support
 #' @export
 #' @import methods
@@ -30,16 +30,13 @@ setClass("frequentsets",
            minsup = "numeric"
          ))
 
-##############################################################################
-#### generics
-
 
 ##############################################################################
 #### methods
 
 #' @describeIn frequentsets Shows the total number of the frequently occuring
 #' itemsets and how often the different sets sizes occur.
-#' @param object object of class frequentsets
+#' @param object Object of class frequentsets
 
 
 setMethod("show",
@@ -49,7 +46,7 @@ setMethod("show",
             hlp1 <- length(object@supports)
 
             cat("Overall\n")
-            cat(hlp1,"frequently occuring itemsets\n\n")
+            cat(hlp1, "frequently occuring itemsets\n\n")
 
             #create a list, containing the indices of the frequently occuring
             #itemsets from object@sets
@@ -127,7 +124,7 @@ setMethod("summary",
           })
 
 #' @describeIn frequentsets Plots a histogram of the support distribution for each set size
-#' @param x object of class \code{frequentsets}
+#' @param x Object of class \code{frequentsets}
 
 setMethod("plot",
           "frequentsets",
