@@ -31,7 +31,7 @@ generate_sets <- function(sets, k) {
 
 
   if (any(out)) {
-    new_sets <- new_sets[-which(out),]
+    new_sets <- new_sets[-which(out),, drop = FALSE]
   }
 
 
