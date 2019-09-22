@@ -22,6 +22,15 @@
 #' @param m_sup User specified minimum support
 #' @param m_conf User specified minimum confidence
 #' @return Returns an object of class \code{AssociationRules}
+#' @examples
+#' \dontrun{
+#' ## Load data
+#' data(Groceries)
+#' ## Mine rules
+#' x <- apriorimining(Groceries, m_sup = 0.05, m_conf = 0.3)
+#' ## use methods
+#' summary(x)
+#' }
 #' @export
 #' @include classes_frequentsets.R classes_transactiondata.R
 #' classes_associationrules.R

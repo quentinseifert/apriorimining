@@ -5,7 +5,7 @@
 #' Transform the transaction matrix
 #' @description Transforms a given transaction matrix into an object
 #' of class TransactionData, enabling the user to examine the TransactionData
-#' with the provided methodes.
+#' with the provided methods.
 #' @param input Binary matrix containing transaction data, with rows
 #' representing transactions and columns representing items. Can be
 #' either logical or numeric, every value has to be either 0 / 1 or

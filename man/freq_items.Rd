@@ -23,3 +23,13 @@ Returns an object of class \code{FrequentSets}
 on the chosen minimum support. The function demands a transaction matrix
 and a user specified minimum support.
 }
+\examples{
+\dontrun{
+## load data
+data(Groceries)
+x <- freq_items(Groceries, m_sup = 0.1)
+## inspect
+summary(x)
+plot(x)
+}
+}

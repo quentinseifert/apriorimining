@@ -15,6 +15,15 @@
 #' named. \code{freq_item} also takes an object class \code{TransactionData}.
 #' @param m_sup User specified minimum support
 #' @return Returns an object of class \code{FrequentSets}
+#' @examples
+#' \dontrun{
+#' ## load data
+#' data(Groceries)
+#' x <- freq_items(Groceries, m_sup = 0.1)
+#' ## inspect
+#' summary(x)
+#' plot(x)
+#' }
 #' @export
 #' @include classes_frequentsets.R classes_transactiondata.R
 #' @importFrom methods as new

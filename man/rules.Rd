@@ -19,3 +19,13 @@ The function \code{rules} generates all possible association rules.
 The function demands the frequently occuring item sets and a user specified
 minimum confidence.
 }
+\examples{
+\dontrun{
+## create FrequentSets object
+x <- freq_items(data, m_sup = 0.3)
+## find rules
+y <- rules(x, m_conf = 0.2)
+## inspect
+summary(y)
+}
+}

@@ -11,6 +11,15 @@
 #' @param itemsets Object of class FrequentSets
 #' @param m_conf User specified minimum confidence
 #' @return Returs an object of class \code{AssociationRules}
+#' @examples
+#' \dontrun{
+#' ## create FrequentSets object
+#' x <- freq_items(data, m_sup = 0.3)
+#' ## find rules
+#' y <- rules(x, m_conf = 0.2)
+#' ## inspect
+#' summary(y)
+#' }
 #' @export
 #' @include classes_frequentsets.R classes_associationrules.R
 #' @importFrom methods new

@@ -5,7 +5,7 @@ Version: 0.1.0
 Maintainer: Quentin Seifert <quentin.seifert@stud.uni-goettingen.de>
 Author: c(person("Quentin", "Seifert",email = "quentin.seifert@stud.uni-goettingen.de",role = c("aut", "cre")),person("Jan-Henrik", "Thauer",email = "jan-henrik.thauer@stud.uni-goettingen.de",role = "aut"))
 Description: The package finds association rules using the Apriori Algorithm and provides tools in order to analyse transaction data and to present the results. 
-License: MIT + file LICENSE.txt
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.1

@@ -33,3 +33,13 @@ These functions can also be accessed seperately.
 The function \code{apriorimining} returns an object of class
 AssociationRules, which can be analysed using \code{show} and \code{summary}.
 }
+\examples{
+\dontrun{
+## Load data
+data(Groceries)
+## Mine rules
+x <- apriorimining(Groceries, m_sup = 0.05, m_conf = 0.3)
+## use methods
+summary(x)
+}
+}
