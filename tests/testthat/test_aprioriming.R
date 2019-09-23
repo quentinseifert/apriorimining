@@ -24,13 +24,6 @@ rules_2 <- apriori(t(groc), parameter = list(support = 0.01,
 
 
 
-test_that("test if both packages find the same amount of rules",
-  {
-
-  expect_equal(nrow(rules_1@antecedent), nrow(rules_2@lhs))
-  expect_equal
-  }
-)
 
 
 

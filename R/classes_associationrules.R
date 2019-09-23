@@ -7,7 +7,7 @@
 
 #' AssociationRules
 #' @description The S4 class \code{AssociationRules} characterises the generated
-#' association rules using four different slots. An object of class
+#' association rules using five different slots. An object of class
 #' \code{AssociationRules} can be analysed using \code{show} and \code{summary}.
 #' @slot items Character vector containing the item names of the transaction matrix
 #' @slot antecedent Each antecedent of every generated association rule

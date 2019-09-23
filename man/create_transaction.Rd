@@ -19,5 +19,5 @@ Returns an object of class \code{TransactionData}
 \description{
 Transforms a given transaction matrix into an object
 of class TransactionData, enabling the user to examine the TransactionData
-with the provided methodes.
+with the provided methods.
 }

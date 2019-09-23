@@ -185,7 +185,8 @@ setMethod("plot",
             barplot(freqs[1:limit],
                     names.arg = names[1:limit],
                     las = 2,
-                    cex.names = 0.75
+                    cex.names = 0.75,
+                    main = "Frequent Items"
                     )
           })
 
